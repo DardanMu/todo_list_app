@@ -4,21 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>TODO List</title>
-	<link rel="stylesheet" type="text/css" href="layout.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="jquery1.6.2.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
 
-	<!-- test stuff, please ignore
-
-	<p id="test"></p>
-
-	<ol>
-		<li class="done"><span class="listText">Testing buttons!</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>
-	</ol>
-
-	 END test stuff -->
 
 	<h2>Your to-do list:</h2>
 	<form name="addToList" id="addToList">
@@ -28,6 +19,72 @@
 
 	<ol id="list">
 	</ol>
+
+<h4></h4>
+
+<script type="text/javascript">
+	function getValue(x){
+		var keyname = window.localStorage.key(x);
+		var valueOfKey = window.localStorage.getItem(keyname);
+
+		$('<li><span class="listText">' +valueOfKey+ '</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+	}
+
+	jQuery(document).ready(function($) {
+			for(x=0;x<window.localStorage.length;x++){
+		getValue(x);
+	}
+var currentCount = window.localStorage.length;
+
+	$('h4').append(currentCount);
+	$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
+
+	});
+
+	//USE THIS LOOP IN SCRIPT.JS TO IDENTIFY KEY/VALUE PAIRS
+	for (var key in localStorage){
+		var itemValue = window.localStorage.getItem(key);
+   $('<p>' + key + ' - ' + itemValue + '</p>').insertAfter('h4');
+}
+
+
+</script>
+
+<!-- EXPERIMENT STUFF
+<script type="text/javascript">
+
+	window.localStorage.setItem("uk", "London"); 		// index 0
+	window.localStorage.setItem("usa", "New York"); 	// index 1
+	window.localStorage.setItem("france", "Paris"); 	// index 2
+	window.localStorage.setItem("kosovo", "Prishtina"); // index 3
+	window.localStorage.setItem(5, "Amsterdam"); 		// index 4
+	window.localStorage.removeItem(7); 		// index 6
+
+	//var numberexample = 6;
+
+	//window.localStorage.setItem(numberexample, "LA, CA"); 		// index 5
+	window.localStorage.setItem(6, "LA, California!!!");
+
+	var currentCount = (window.localStorage.length) + 1;
+
+	$('h4').append(currentCount);
+
+
+	function getValue(x){
+		var keyname = window.localStorage.key(x);
+		var valueOfKey = window.localStorage.getItem(keyname);
+
+		$('<li><span class="listText">' +valueOfKey+ '</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+	}
+
+
+	for(x=0;x<window.localStorage.length;x++){
+		getValue(x);
+	}
+</script>
+-->
+
+
 
 
 </body>
