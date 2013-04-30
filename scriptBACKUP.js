@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	//global variables/functions
 	var currentCountInc = JSON.parse(localStorage.getItem("userList")).length + 1;
-	var secondsVar = new Date().getTime() / 1000;
+	var secondsVar = new Date().getTime() / 1000;0
 	var itemListArray = JSON.parse(localStorage.getItem("userList"));
 
 
@@ -13,10 +13,10 @@ function itemObjectConstruct(id, item, complete)
 	this.complete=complete;
 }
 
-function deleteItem(thisValue, thisID){
+function deleteItem(thisValue){
 	for(var i=0;i<itemListArray.length;i++){
 		var objectItem = itemListArray[i];
-   		if(objectItem.item === thisValue && (objectItem.id.toString()) === thisID){ 
+   		if(objectItem.item === thisValue){ 
    			itemListArray.splice(i,1);
    			localStorage.setItem("userList", JSON.stringify(itemListArray));
    			return true;
@@ -25,7 +25,7 @@ function deleteItem(thisValue, thisID){
 	}
 }
 
-	//executed one "Add" button is clicked
+
 	$('#addToList').submit(function(){
 
 		var userInput = $('#userInput').val();
@@ -43,9 +43,9 @@ function deleteItem(thisValue, thisID){
 			localStorage.setItem("userList", JSON.stringify(currentItemArray));
 
 			//window.localStorage.setItem(secondsVar, userInput);
-			$('<li><span class="listText">' +newItem.item+ '</span> <span id="hiddenItemID">'+newItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+			$('<li><span class="listText">' +newItem.item+ '</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
 
-			//return false; //<-- disables refresh
+			//return false;
 		};
 	});
 
@@ -57,10 +57,9 @@ function deleteItem(thisValue, thisID){
 	//delete items
 	$("#delete").live('click', function(){
 		//the text in the list that was clicked
-		var thisValue = $(this).parent('li').children('.listText').text();
-		var thisID = $(this).parent('li').children('#hiddenItemID').text();
+		var thisValue = $(this).parent('li').children('span').text();
 		//call the delete function above
-		deleteItem(thisValue, thisID);
+		deleteItem(thisValue);
 
 
 		$(this).parent('li').remove();

@@ -23,29 +23,69 @@
 <h4></h4>
 
 <script type="text/javascript">
-	function getValue(x){
-		var keyname = window.localStorage.key(x);
-		var valueOfKey = window.localStorage.getItem(keyname);
+	function printValue(){
+		
+		var itemListArray = JSON.parse(localStorage.getItem("userList"));
 
-		$('<li><span class="listText">' +valueOfKey+ '</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+		for(var i=0;i<itemListArray.length;i++){
+		var objectItem = itemListArray[i];
+
+			$('<li><span class="listText">' +objectItem.item+ '</span> <span id="hiddenItemID">'+objectItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+	}
 	}
 
 	jQuery(document).ready(function($) {
-			for(x=0;x<window.localStorage.length;x++){
-		getValue(x);
-	}
-var currentCount = window.localStorage.length;
+		//Initial function to display saved items onto the page
+		printValue();
 
-	$('h4').append(currentCount);
-	$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
+
+
+
+
+
+var currentCount2 = JSON.parse(localStorage.getItem("userList")).length;
+					//window.localStorage.length;
+
+	$('h4').append(currentCount2);
+	//clear all items button
+	//$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
 
 	});
 
-	//USE THIS LOOP IN SCRIPT.JS TO IDENTIFY KEY/VALUE PAIRS
-	for (var key in localStorage){
-		var itemValue = window.localStorage.getItem(key);
-   $('<p>' + key + ' - ' + itemValue + '</p>').insertAfter('h4');
-}
+	//loop to print out values - test stuff only
+var itemListArray = JSON.parse(localStorage.getItem("userList"));
+
+		for(var i=0;i<itemListArray.length;i++){
+		var objectItem = itemListArray[i];
+
+			$('<p>' + objectItem.id + ' - ' + objectItem.item + ' - ' + objectItem.complete +'</p>').insertAfter('h4');
+	}
+	//just to space it out on the page, delete afterwards
+	$('<p> <br> .<br> .<br> .<br> .<br> .<br> </p>').insertAfter('h4');
+
+
+	//JSON stuff
+
+	//Dardan, The JSON data works well on this page as an example, now use it on script.js to add to the array everytime a new item is added to the list. Then edit the functions for delete/edit etc. 
+	
+
+	var exampleObjectArray = [
+		{"id":1, "item":"one", "complete":false},
+		{"id":2, "item":"two", "complete":false},
+		{"id":3, "item":"three", "complete":false}
+	];
+
+	//localStorage.setItem("userList", JSON.stringify(exampleObjectArray));
+
+	//$('<p>'+ (JSON.parse(localStorage.getItem("JSON"))).length + '</p>').insertAfter('h4');
+
+
+
+
+
+
+
+
 
 
 </script>
