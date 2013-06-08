@@ -12,7 +12,7 @@ function itemObjectConstruct(id, item, complete)
 	this.item=item;
 	this.complete=complete;
 }
-
+//delete function
 function deleteItem(thisValue, thisID){
 	for(var i=0;i<itemListArray.length;i++){
 		var objectItem = itemListArray[i];
@@ -21,7 +21,18 @@ function deleteItem(thisValue, thisID){
    			localStorage.setItem("userList", JSON.stringify(itemListArray));
    			return true;
    		}
+	}
+}
+//edit function
+function editItem(thisValue, thisID, newItem){
+	for(var i=0;i<itemListArray.length;i++){
+		var objectItem = itemListArray[i];
+   		if(objectItem.item === thisValue && (objectItem.id.toString()) === thisID){ 
 
+   			objectItem.item = newItem;
+   			localStorage.setItem("userList", JSON.stringify(itemListArray));
+   			return true;
+   		}
 	}
 }
 
@@ -70,22 +81,19 @@ function deleteItem(thisValue, thisID){
 	$("#edit").live('click', function(){
 
 		if($('#editBox').length === 0){
-			var currentItem = $(this).parent('li').children('span').text();
+			var thisValue = $(this).parent('li').children('.listText').text();
+			var thisID = $(this).parent('li').children('#hiddenItemID').text();
 
-			$('<form id="editForm"><textarea id="editBox">' + currentItem + '</textarea> <button id="confirmButton">Confirm</button> <input type="button" id="cancelButton" value="Cancel"></input></form>').insertAfter(this).parent('li');
+			$('<form id="editForm"><textarea id="editBox">' + thisValue + '</textarea> <button id="confirmButton">Confirm</button> <input type="button" id="cancelButton" value="Cancel"></input></form>').insertAfter(this).parent('li');
 
 			//edit contents
 			$('#editForm').submit(function(){
 				var newItem = $('#editBox').val();
-
+				editItem(thisValue, thisID, newItem);
 				$(this).parent('li').children('span').html(newItem);
-
-
 
 				//remove edit form
 				$('#editForm').remove();
-
-				return false;
 			});
 
 			$('#cancelButton').click(function(){
