@@ -1,3 +1,8 @@
+<!-- Code Not finished and may not work correctly right now. 
+NOTE: to start the localStorage JS commands on a new location, you must uncomment the setItem function on line 37 > refresh the page > then comment it again to set a new key named "userList".
+ -->
+
+
 <!doctype html>
 
 <html>
@@ -23,6 +28,19 @@
 <h4></h4>
 
 <script type="text/javascript">
+
+	var exampleObjectArray = [
+		{"id":1, "item":"one", "complete":false},
+		{"id":2, "item":"two", "complete":false},
+		{"id":3, "item":"three", "complete":false}
+	];
+
+	//localStorage.setItem("userList", JSON.stringify(exampleObjectArray));
+
+
+
+
+
 	function printValue(){
 		
 		var itemListArray = JSON.parse(localStorage.getItem("userList"));
@@ -69,13 +87,7 @@ var itemListArray = JSON.parse(localStorage.getItem("userList"));
 	//Dardan, The JSON data works well on this page as an example, now use it on script.js to add to the array everytime a new item is added to the list. Then edit the functions for delete/edit etc. 
 	
 
-	var exampleObjectArray = [
-		{"id":1, "item":"one", "complete":false},
-		{"id":2, "item":"two", "complete":false},
-		{"id":3, "item":"three", "complete":false}
-	];
 
-	//localStorage.setItem("userList", JSON.stringify(exampleObjectArray));
 
 	//$('<p>'+ (JSON.parse(localStorage.getItem("JSON"))).length + '</p>').insertAfter('h4');
 
