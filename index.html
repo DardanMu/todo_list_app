@@ -1,7 +1,5 @@
-<!-- Code Not finished and may not work correctly right now. 
-NOTE: to start the localStorage JS commands on a new location, you must uncomment the setItem function on line 37 > refresh the page > then comment it again to set a new key named "userList".
- -->
-
+<!-- NOTE: Code Not finished and may not work correctly right now. 
+-->
 
 <!doctype html>
 
@@ -15,7 +13,6 @@ NOTE: to start the localStorage JS commands on a new location, you must uncommen
 </head>
 <body>
 
-
 	<h2>Your to-do list:</h2>
 	<form name="addToList" id="addToList">
 		<textarea rows="4" cols="50" id="userInput" placeholder="Enter an item in here!"></textarea>
@@ -25,119 +22,77 @@ NOTE: to start the localStorage JS commands on a new location, you must uncommen
 	<ol id="list">
 	</ol>
 
-<h4></h4>
+	<h4></h4>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+		//A global variable for obtaining the list item objects.
+		var itemListArray = JSON.parse(localStorage.getItem("userList"));
 
-	var exampleObjectArray = [
+		//Test if the localStorage key "userList" exists, which is needed in order to add items to the list.
+		if(!itemListArray){
+			//create the first list item and store into localStorage under the key "userList"
+			var exampleObjectArray = [
+			{"id":1, "item":"Add your tasks to the list!", "complete":false}
+			];
+			localStorage.setItem("userList", JSON.stringify(exampleObjectArray));
+		}
+
+
+	jQuery(document).ready(function($) {
+
+	function printValue(){		
+		for(var i=0;i<itemListArray.length;i++){
+			var objectItem = itemListArray[i];
+
+			if(objectItem.complete === true){
+				$('<li class="done"><span class="listText">' +objectItem.item+ '</span> <span id="hiddenItemID">'+objectItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+			}else{
+				$('<li><span class="listText">' +objectItem.item+ '</span> <span id="hiddenItemID">'+objectItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
+			}	
+		}
+	}
+
+	//Initial function to display the items onto the page on every page load.
+	printValue();
+
+
+//
+//TESTING STUFF ONLY
+//
+var currentCount2 = JSON.parse(localStorage.getItem("userList")).length;
+					//window.localStorage.length;
+
+					$('h4').append(currentCount2);
+	//clear all items button
+	//$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
+
+});
+
+	//loop to print out values
+	var itemListArray = JSON.parse(localStorage.getItem("userList"));
+
+	for(var i=0;i<itemListArray.length;i++){
+		var objectItem = itemListArray[i];
+
+		$('<p>' + objectItem.id + ' - ' + objectItem.item + ' - ' + objectItem.complete +'</p>').insertAfter('h4');
+	}
+	//just to space it out on the page. delete afterwards
+	$('<p> <br> .<br> .<br> .<br> .<br> .<br> </p>').insertAfter('h4');
+
+/*	var exampleObjectArray = [
 		{"id":1, "item":"one", "complete":false},
 		{"id":2, "item":"two", "complete":false},
 		{"id":3, "item":"three", "complete":false}
 	];
 
-	//localStorage.setItem("userList", JSON.stringify(exampleObjectArray));
+	localStorage.setItem("userList", JSON.stringify(exampleObjectArray)); */
 
 
-
-
-
-	function printValue(){
-		
-		var itemListArray = JSON.parse(localStorage.getItem("userList"));
-
-		for(var i=0;i<itemListArray.length;i++){
-		var objectItem = itemListArray[i];
-
-			$('<li><span class="listText">' +objectItem.item+ '</span> <span id="hiddenItemID">'+objectItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
-	}
-	}
-
-	jQuery(document).ready(function($) {
-		//Initial function to display saved items onto the page
-		printValue();
-
-
-
-
-
-
-var currentCount2 = JSON.parse(localStorage.getItem("userList")).length;
-					//window.localStorage.length;
-
-	$('h4').append(currentCount2);
-	//clear all items button
-	//$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
-
-	});
-
-	//loop to print out values - test stuff only
-var itemListArray = JSON.parse(localStorage.getItem("userList"));
-
-		for(var i=0;i<itemListArray.length;i++){
-		var objectItem = itemListArray[i];
-
-			$('<p>' + objectItem.id + ' - ' + objectItem.item + ' - ' + objectItem.complete +'</p>').insertAfter('h4');
-	}
-	//just to space it out on the page, delete afterwards
-	$('<p> <br> .<br> .<br> .<br> .<br> .<br> </p>').insertAfter('h4');
-
-
-	//JSON stuff
-
-	//Dardan, The JSON data works well on this page as an example, now use it on script.js to add to the array everytime a new item is added to the list. Then edit the functions for delete/edit etc. 
-	
-
-
-
-	//$('<p>'+ (JSON.parse(localStorage.getItem("JSON"))).length + '</p>').insertAfter('h4');
-
-
-
-
-
-
-
-
+//	
+// END of test code
+//
 
 
 </script>
-
-<!-- EXPERIMENT STUFF
-<script type="text/javascript">
-
-	window.localStorage.setItem("uk", "London"); 		// index 0
-	window.localStorage.setItem("usa", "New York"); 	// index 1
-	window.localStorage.setItem("france", "Paris"); 	// index 2
-	window.localStorage.setItem("kosovo", "Prishtina"); // index 3
-	window.localStorage.setItem(5, "Amsterdam"); 		// index 4
-	window.localStorage.removeItem(7); 		// index 6
-
-	//var numberexample = 6;
-
-	//window.localStorage.setItem(numberexample, "LA, CA"); 		// index 5
-	window.localStorage.setItem(6, "LA, California!!!");
-
-	var currentCount = (window.localStorage.length) + 1;
-
-	$('h4').append(currentCount);
-
-
-	function getValue(x){
-		var keyname = window.localStorage.key(x);
-		var valueOfKey = window.localStorage.getItem(keyname);
-
-		$('<li><span class="listText">' +valueOfKey+ '</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
-	}
-
-
-	for(x=0;x<window.localStorage.length;x++){
-		getValue(x);
-	}
-</script>
--->
-
-
-
-
 </body>
 </html>	

@@ -4,13 +4,28 @@ jQuery(document).ready(function($) {
 	var secondsVar = new Date().getTime() / 1000;
 	var itemListArray = JSON.parse(localStorage.getItem("userList"));
 
-
-//user Input object constructor
-function itemObjectConstruct(id, item, complete)
+//user input object constructor
+function itemObjectConstruct(id, input, complete)
 {
 	this.id=id;
-	this.item=item;
+	this.item=input;
 	this.complete=complete;
+}
+//completeTask function - apply line-through css to item
+function completeTask(thisValue, thisID, newItem){
+	for(var i=0;i<itemListArray.length;i++){
+		var objectItem = itemListArray[i];
+   		if(objectItem.item === thisValue && (objectItem.id.toString()) === thisID){
+   			//set 'complete' variable in object: objectItem to the opposite state.
+   			if(objectItem.complete === false){ 
+   				objectItem.complete = true;
+   			}else{
+   				objectItem.complete = false;
+   			}
+   			localStorage.setItem("userList", JSON.stringify(itemListArray));
+   			return true;
+   		}
+	}
 }
 //delete function
 function deleteItem(thisValue, thisID){
@@ -28,7 +43,7 @@ function editItem(thisValue, thisID, newItem){
 	for(var i=0;i<itemListArray.length;i++){
 		var objectItem = itemListArray[i];
    		if(objectItem.item === thisValue && (objectItem.id.toString()) === thisID){ 
-
+   			//changes the 'item' value in the object to a new value (the edited content).
    			objectItem.item = newItem;
    			localStorage.setItem("userList", JSON.stringify(itemListArray));
    			return true;
@@ -36,7 +51,7 @@ function editItem(thisValue, thisID, newItem){
 	}
 }
 
-	//executed one "Add" button is clicked
+	//executed once "Add" button is clicked
 	$('#addToList').submit(function(){
 
 		var userInput = $('#userInput').val();
@@ -48,12 +63,10 @@ function editItem(thisValue, thisID, newItem){
 				
 			var newItem = new itemObjectConstruct(currentCountInc, userInput, false);
 
-
 			var currentItemArray = JSON.parse(localStorage.getItem("userList"));
 			currentItemArray.push(newItem);
 			localStorage.setItem("userList", JSON.stringify(currentItemArray));
 
-			//window.localStorage.setItem(secondsVar, userInput);
 			$('<li><span class="listText">' +newItem.item+ '</span> <span id="hiddenItemID">'+newItem.id+'</span> <button id="strikeOff">&#10003;</button> <button id="delete">&#10007;</button> <button id="edit">EDIT</button> </li>').appendTo('#list');
 
 			//return false; //<-- disables refresh
@@ -62,10 +75,15 @@ function editItem(thisValue, thisID, newItem){
 
 	//scrach off completed items / Toggle CSS class
 	$("#strikeOff").live('click', function(){
+		var thisValue = $(this).parent('li').children('.listText').text();
+		var thisID = $(this).parent('li').children('#hiddenItemID').text();
+
+		completeTask(thisValue, thisID);
+
 		$(this).parent('li').toggleClass('done');
 	});
 
-	//delete items
+	//delete item if clicked
 	$("#delete").live('click', function(){
 		//the text in the list that was clicked
 		var thisValue = $(this).parent('li').children('.listText').text();
@@ -73,13 +91,12 @@ function editItem(thisValue, thisID, newItem){
 		//call the delete function above
 		deleteItem(thisValue, thisID);
 
-
 		$(this).parent('li').remove();
 	});
 
-	//edit items
+	//executes once "edit" button is clicked
 	$("#edit").live('click', function(){
-
+		//check if another "edit" textbox is already open.
 		if($('#editBox').length === 0){
 			var thisValue = $(this).parent('li').children('.listText').text();
 			var thisID = $(this).parent('li').children('#hiddenItemID').text();
@@ -99,10 +116,8 @@ function editItem(thisValue, thisID, newItem){
 			$('#cancelButton').click(function(){
 				$('#editForm').remove();
 			});
-
 		}else{
-    		//Textbox already out, do nothing.
+    		//A textbox already out; do nothing.
     	}
     });
-
 });
