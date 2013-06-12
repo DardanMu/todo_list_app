@@ -55,44 +55,7 @@
 	//Initial function to display the items onto the page on every page load.
 	printValue();
 
-
-//
-//TESTING STUFF ONLY
-//
-var currentCount2 = JSON.parse(localStorage.getItem("userList")).length;
-					//window.localStorage.length;
-
-					$('h4').append(currentCount2);
-	//clear all items button
-	//$('<button onclick="window.localStorage.clear()">Clear All Items</button>').insertAfter('h4');
-
-});
-
-	//loop to print out values
-	var itemListArray = JSON.parse(localStorage.getItem("userList"));
-
-	for(var i=0;i<itemListArray.length;i++){
-		var objectItem = itemListArray[i];
-
-		$('<p>' + objectItem.id + ' - ' + objectItem.item + ' - ' + objectItem.complete +'</p>').insertAfter('h4');
-	}
-	//just to space it out on the page. delete afterwards
-	$('<p> <br> .<br> .<br> .<br> .<br> .<br> </p>').insertAfter('h4');
-
-/*	var exampleObjectArray = [
-		{"id":1, "item":"one", "complete":false},
-		{"id":2, "item":"two", "complete":false},
-		{"id":3, "item":"three", "complete":false}
-	];
-
-	localStorage.setItem("userList", JSON.stringify(exampleObjectArray)); */
-
-
-//	
-// END of test code
-//
-
-
-</script>
+	});
+	</script>
 </body>
 </html>	
