@@ -60,7 +60,7 @@ function editItem(thisValue, thisID, newItem){
 		if(userInput === ""){
 			return false;
 		}else{
-				
+				//create new item object and push it into the localStorage list
 			var newItem = new itemObjectConstruct(currentCountInc, userInput, false);
 
 			var currentItemArray = JSON.parse(localStorage.getItem("userList"));

@@ -28,7 +28,7 @@
 		//A global variable for obtaining the list item objects.
 		var itemListArray = JSON.parse(localStorage.getItem("userList"));
 
-		//Test if the localStorage key "userList" exists, which is needed in order to add items to the list.
+		//Check if the localStorage key "userList" exists, which is needed in order to add items to the list.
 		if(!itemListArray){
 			//create the first list item and store into localStorage under the key "userList"
 			var exampleObjectArray = [
@@ -39,7 +39,7 @@
 
 
 	jQuery(document).ready(function($) {
-
+		//print the list
 	function printValue(){		
 		for(var i=0;i<itemListArray.length;i++){
 			var objectItem = itemListArray[i];
